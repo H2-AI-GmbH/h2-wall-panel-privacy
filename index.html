@@ -25,48 +25,95 @@
     <p class="languages"><a href="#english">English</a> &middot; <a href="#deutsch">Deutsch</a></p>
 
     <h1 id="english">Privacy Policy</h1>
-    <p class="updated">Last updated: 22 September 2026</p>
+    <p class="updated">Last updated: September 30, 2026</p>
 
     <h2>H2 Wall Panel</h2>
     <p>H2 Wall Panel ("the app") is developed by H2-AI GmbH, Germany. This privacy policy explains what the app does with data, what stays on your device and what leaves it.</p>
-    <p>The short version: we receive nothing. There is no account, no cloud service and no server operated by us. Everything the app sends goes to servers that you set up and control yourself.</p>
+    <p>Controller: H2-AI GmbH, Amselrain 43, 75038 Oberderdingen, Germany, Email: <a href="mailto:info@h2-ai.de">info@h2-ai.de</a></p>
+    <p>The short version: the panel sends its data only to servers that you set up and control yourself, to the web pages you open on the panel, and to Google Play for the purchase. The only thing that reaches us is what we need for the license: a pseudonymous device ID and, after a purchase, the Google Play purchase receipt. If you only use the free demo, the app sends the pseudonymous device ID to us once, for a check after installation, and nothing after that. There is no account, no analytics and no advertising.</p>
 
     <h2>1. What we collect</h2>
-    <p>We collect no personal data. H2-AI GmbH operates no server that this app contacts, and the app contains no analytics, no crash reporting and no advertising libraries of any kind.</p>
+    <p>We collect only the license data described in section 3 d): a pseudonymous device ID, the purchase receipt after you buy a license, and the technical server logs of our license server. The app contains no analytics, no crash reporting and no advertising libraries of any kind. Nothing from your dashboard, your broker, your camera or your settings is ever sent to us.</p>
 
     <h2>2. What stays on your device</h2>
     <p>The following is stored locally on the device and is never transmitted to us:</p>
     <ul>
         <li>Your settings, including the dashboard address, screensaver options, schedule and orientation, stored with Android DataStore</li>
-        <li>Your exit PIN, stored as a hash, never in readable form</li>
+        <li>Your exit PIN, stored as a salted hash (PBKDF2), never in readable form</li>
         <li>Your Home Assistant access token, encrypted with AES-256-GCM using a key held in the Android keystore</li>
         <li>Your MQTT broker password, encrypted the same way</li>
-        <li>Your purchase state</li>
+        <li>For the automatic sign-in, a copy of the access token in the browser storage of your dashboard page on this device, which is where Home Assistant keeps any browser login. This storage belongs to the app and cannot be read by other apps</li>
+        <li>What the built-in browser keeps for the pages you open, such as cookies and page storage, as any browser does</li>
+        <li>If you use the photo slideshow, the permission to read the one folder you picked. The pictures are read from that folder and shown on the screen, nothing else</li>
+        <li>If you bought a license: the license for this device as a file signed by our server, so the full version keeps working offline, and until the license is confirmed, the Google Play purchase receipt. The license itself comes from our server, and the receipt is sent to it once, as described in section 3 d)</li>
     </ul>
     <p>The encryption keys never leave the device's hardware-backed keystore. If the keystore is reset, for example by a factory reset or by restoring a backup to a different device, the stored credentials become unreadable and the app asks you to enter them again.</p>
     <p>The app is excluded from Android's cloud backup and from device-to-device transfer, so none of this data is copied into a Google backup.</p>
 
     <h2>3. What the app sends, and where</h2>
-    <p>The app only ever contacts two kinds of destination, both of which you enter yourself:</p>
+    <p>The app contacts destinations that you choose yourself, Google Play, and, for the license, our license server:</p>
 
-    <h3>a) Your dashboard</h3>
-    <p>The app loads the web address you configure. That address is usually a Home Assistant instance on your own network. If you store an access token, the app passes it to that address so the dashboard logs you in, exactly as a browser would. The token is only ever handed to the exact address you configured, and to no other site.</p>
+    <h3>a) Your dashboard, and pages you open from it</h3>
+    <p>The app loads the web address you configure. That address is usually a Home Assistant instance on your own network. If you store an access token, the app passes it to that address so the dashboard logs you in, exactly as a browser would. The token is only ever handed to the exact address (scheme, host and port) you configured, and to no other site.</p>
+    <p>Links on your dashboard open inside the panel, as they would in a browser. A page you open that way is loaded directly from its own server, and that site's own privacy policy applies. If you switch on "Only dashboard addresses in the browser", links only open on your dashboard's address and on the extra addresses you list.</p>
 
     <h3>b) Your MQTT broker, if you switch that feature on</h3>
-    <p>The home automation link is optional and off until you enter a broker. When it is on, the app publishes the following information to the broker you entered:</p>
+    <p>The home automation link is part of the full version. It is optional and off until you enter a broker and switch it on. When it is on, the app publishes the following information to the broker you entered:</p>
     <ul>
         <li>Battery level and whether the device is charging</li>
-        <li>Whether the screen is currently showing something</li>
-        <li>Whether the kiosk lock is active</li>
+        <li>Whether the screen is currently showing something, its brightness, and whether the screensaver is on</li>
+        <li>Whether the kiosk is running and whether the kiosk lock is switched on</li>
+        <li>Whether the panel has a problem showing the dashboard, for example because it shows its offline page</li>
         <li>Whether a scheduled dark period is running</li>
         <li>Whether motion was detected, as a yes or no value</li>
         <li>Wi-Fi signal strength</li>
         <li>The address currently displayed, shortened to 250 characters</li>
-        <li>The app version</li>
-        <li>A device identifier generated by the app, so your dashboard can tell several panels apart</li>
+        <li>The app version and the device model</li>
+        <li>A device identifier made from the device model and the first eight characters of Android's device ID, and a panel name that you can change, so your dashboard can tell several panels apart</li>
     </ul>
-    <p>The app also subscribes to command topics on the same broker, so your dashboard can switch the screen, change brightness, start or stop the screensaver, reload the page, restart the kiosk, or send the panel to a different address.</p>
+    <p>The app also subscribes to command topics on the same broker, so your dashboard can switch the screen, change brightness, start or stop the screensaver, reload the page, restart the kiosk screen, send the panel to a different address on your dashboard or on the list of addresses you allowed, and, unless you forbid it in the settings, switch the kiosk lock on or off.</p>
     <p>This broker is yours. It normally runs on your own hardware inside your own network. We have no access to it and receive none of this information. You can switch the feature off at any time, and the app then publishes nothing.</p>
+
+    <h3>c) Google Play</h3>
+    <p>The in-app purchase is handled by Google Play, and the app may occasionally ask Google Play to show its rating dialog. See sections 8 and 9.</p>
+
+    <h3>d) Our license server</h3>
+    <p>The full version is sold as a license for one device. To bind the license to the panel and to check it, the app talks to our license server at lizenz.h2-ai.de, always over HTTPS.</p>
+    <p>When the app contacts it:</p>
+    <ul>
+        <li>Once after the app is installed: when the app starts and no license is stored on the device, it asks our server whether this device has a license, so that a license bought for this device comes back without you having to do anything, for example after reinstalling the app. This check waits until the device is online. Once our server has answered (license found or no license), the app does not repeat this automatic check. If there was no answer, for example because the device was offline or our server could not be reached, the app tries again the next time it starts.</li>
+        <li>Right after you buy a license, to register the purchase.</li>
+        <li>About once a day while a license is stored on the device and the device is online, to renew it. Without a connection, the full version keeps working for up to 30 days from the last successful check; after 20 days the app reminds you to connect.</li>
+        <li>When you tap "Restore license", for example if the automatic check could not reach our server.</li>
+    </ul>
+    <p>The app does not contact the license server in any other situation. If you never buy a license, the app sends the pseudonymous device ID to us only for the one automatic check after installation.</p>
+    <p>What is sent:</p>
+    <ul>
+        <li>Device ID: a SHA-256 hash of Android's device ID (ANDROID_ID) combined with a fixed value specific to this app. Our server never receives the Android ID itself. The value stays the same when you reinstall the app and changes after a factory reset. It is a different value from the MQTT device identifier in b).</li>
+        <li>Purchase receipt, only when a purchase is registered: the purchase token that Google Play gives the app, and the ID of the product bought.</li>
+        <li>The name of the app ("wallpanel").</li>
+    </ul>
+    <p>When our server receives a purchase token, it asks Google Play to confirm the purchase and receives from Google the order number, the quantity, the purchase state, whether it was a test purchase and the device ID that the app passed to Google Play when you bought (section 8). It stores the device ID, the purchase token, the product ID, the order number, the quantity, whether it was a test purchase, whether the purchase has been consumed, and the time of registration. For each license it keeps a license ID, the device it is bound to and when it was bound, withdrawn or moved, and a log of these events. It then marks the purchase as consumed at Google Play. Our server also regularly fetches from Google Play the list of refunded purchases of this app (purchase token, order number, time, quantity, reason) and keeps it, so that a refunded purchase cannot become a license.</p>
+    <p>The license the server sends back contains the device ID, the license ID and how long it is valid, and is signed by our server. It is stored on your device (section 2).</p>
+    <p>Why, and on which legal basis:</p>
+    <ul>
+        <li>To confirm that a purchase is genuine and bind it to the device it was bought on, and to renew and restore the license (performance of the contract, Art. 6(1)(b) GDPR).</li>
+        <li>To stop misuse: a purchase can only be registered once and only for the device it was bought on, and a license is withdrawn when Google Play reports that the purchase was refunded (legitimate interest in preventing fraud, Art. 6(1)(f) GDPR).</li>
+        <li>To move a license to the same device after a factory reset, if you ask us to (Art. 6(1)(b) GDPR).</li>
+        <li>To give a license back to the device it was bought for without you having to ask, through the automatic check after installation. If the device has a license, this serves the contract (Art. 6(1)(b) GDPR). If it has none, the check is based on our legitimate interest in returning licenses to our customers automatically and in not offering a second purchase for a device that is already licensed (Art. 6(1)(f) GDPR). The answer "no license" is not stored on our server.</li>
+        <li>Reading the Android device ID on your device is only done in the situations listed above. The license is bound to the device, and in our view recognising the device, including restoring a license bought for it after a reinstallation, is strictly necessary to provide the licensed service you use (Section 25(2) no. 2 of the German TDDDG). The device ID is used for nothing else.</li>
+    </ul>
+    <p>Server logs: our license server receives your device's IP address with each request. The web server writes it to its access log together with the time, the requested address, the response code and the technical identification that Android sends with each request (Android version, device model and build number). The access log is deleted after at most 15 days. This also applies to the automatic check after installation; the access log does not contain the device ID. We use it only to operate the server and to fend off attacks; we do not use it to determine your location and do not combine it with the license data. To limit abuse, the server also counts requests per IP address for one minute, in memory only. The license service itself writes no access log and never logs device IDs, purchase tokens or order numbers.</p>
+    <p>How long:</p>
+    <ul>
+        <li>Records of a license that can still be used are kept as long as the license exists.</li>
+        <li>Records of refunded or withdrawn licenses are deleted 12 months after the last withdrawal; they are kept that long so that the same purchase cannot be registered again.</li>
+        <li>Entries in the event log, and refunds reported by Google for purchases that were never registered, are deleted after 12 months.</li>
+        <li>A check that finds no license, such as the automatic check on a device without a license, is not stored in our database; only the access log entry remains.</li>
+        <li>Encrypted backups of the license database are kept for 30 days, server access logs for at most 15 days.</li>
+    </ul>
+    <p>Deletion runs automatically once a day.</p>
+    <p>Where: the license server runs on a server rented from Hetzner Online GmbH in Germany, which processes the data on our behalf under a data processing agreement. Encrypted backups (GPG) are made every night and stored on our own file server, operated by H2-AI GmbH in Germany.</p>
 
     <h2>4. Camera and motion detection</h2>
     <p>Motion detection is optional and switched off until you turn it on. It uses the front camera, and only while the screensaver is running. It never runs while the dashboard is visible, and never while the screen has been switched off from your dashboard.</p>
@@ -76,40 +123,50 @@
 
     <h2>5. Permissions</h2>
     <ul>
-        <li><strong>Accessibility service:</strong> used only to keep the kiosk locked. It detects when another app comes to the front and when system navigation is used, and puts the kiosk back. It does not read, store or transmit the content of any screen.</li>
-        <li><strong>Display over other apps:</strong> needed for the screensaver, the status bar block and the PIN dialog.</li>
-        <li><strong>Usage access:</strong> used to check which app is in the foreground, as a second, independent path for the kiosk lock.</li>
-        <li><strong>Camera:</strong> only for the optional motion detection described above.</li>
-        <li><strong>Start at boot:</strong> so the panel comes back by itself after a power cut.</li>
-        <li><strong>Keep awake:</strong> so the panel does not fall asleep on the wall.</li>
-        <li><strong>Modify system settings:</strong> only requested if you choose a fixed orientation, and used only to set the system rotation lock.</li>
-        <li><strong>Internet and network state:</strong> to load your dashboard and connect to your broker.</li>
+        <li>Accessibility service: used only to keep the kiosk locked while kiosk mode is running. It detects which app or system window comes to the front and puts the kiosk back, blocks the Home and Recents keys, counts Volume Up presses for the exit gesture, and closes the notification shade and the power menu, each only if that option is switched on. To tell the notification shade from the power menu, it looks at the titles and button labels of these system windows at the moment they open. Of other apps it only uses which app is in front. It does not read the content of your dashboard or of other apps, and it stores and transmits nothing.</li>
+        <li>Display over other apps: needed for the screensaver, the PIN dialog and, on Android 11 and older, the status bar block.</li>
+        <li>Usage access: used to check which app is in the foreground, as a second, independent path for the kiosk lock.</li>
+        <li>Camera: only for the optional motion detection described above.</li>
+        <li>Start at boot: so the panel comes back by itself after a power cut.</li>
+        <li>Keep awake: so the panel does not fall asleep on the wall.</li>
+        <li>Modify system settings: only requested if you choose a fixed orientation, and used only to set the system rotation lock.</li>
+        <li>Internet and network state: to load your dashboard, connect to your broker, and check the license.</li>
     </ul>
     <p>These permissions are used solely to run the panel. None of them is used to collect data.</p>
 
     <h2>6. Background services</h2>
-    <p>The app runs background services to keep the kiosk locked, to hold the connection to your broker, and, if you enabled it, to watch for motion while the screensaver runs. These services exist to keep the panel working unattended. They send nothing to us.</p>
+    <p>The app runs background services to keep the kiosk locked, to hold the connection to your broker, and, if you enabled it, to watch for motion while the screensaver runs. These services exist to keep the panel working unattended. Apart from the license requests in section 3 d), nothing is sent to us.</p>
 
     <h2>7. Transport security</h2>
     <p>Whether the connection to your dashboard and to your broker is encrypted depends on how you set them up. Home Assistant and MQTT brokers on a home network are frequently run without TLS, and the app supports that because otherwise it would not work on a typical home setup. TLS is supported and we recommend it. The app warns you when you enter an address that would send an access token unencrypted to a public host.</p>
-    <p>Because an unencrypted setup is possible, we state in the Google Play data safety section that data is not necessarily encrypted in transit. That refers to traffic inside your own network, between your tablet and your own server.</p>
+    <p>Because an unencrypted setup is possible, we state in the Google Play data safety section that data is not necessarily encrypted in transit. That refers to traffic inside your own network, between your tablet and your own server. The connection to our license server is always encrypted (HTTPS); the app refuses any other connection to it.</p>
 
     <h2>8. In-app purchases</h2>
-    <p>The full version is unlocked through a one-time in-app purchase processed by Google Play. We never see your payment details. See Google's privacy policy at <a href="https://policies.google.com/privacy">https://policies.google.com/privacy</a> for how Google handles payment data.</p>
+    <p>The full version is unlocked through an in-app purchase processed by Google Play. Each purchase is a license for the one device it is bought on. We never see your payment details, your name or your Google account. When you buy, the app passes the pseudonymous device ID from section 3 d) to Google Play as part of the purchase, so the purchase can be linked to this device; Google Play may also use this value to detect irregular purchase activity. See Google's privacy policy at <a href="https://policies.google.com/privacy">https://policies.google.com/privacy</a> for how Google handles purchase and payment data.</p>
 
     <h2>9. Third-party services</h2>
-    <p>The app uses Google Play Billing for the in-app purchase. No other third-party service is integrated. There is no advertising SDK, no analytics SDK and no crash reporting SDK in the app.</p>
+    <p>The app uses two Google Play components: Google Play Billing for the in-app purchase, and the Google Play In-App Review API, which lets Google Play show its own rating dialog now and then. Both are run by Google under Google's privacy policy. Our license server uses the Google Play Developer API to confirm purchases and refunds (section 3 d). No other third-party service is integrated. There is no advertising SDK, no analytics SDK and no crash reporting SDK in the app.</p>
 
     <h2>10. Data deletion</h2>
-    <p>Since we hold no data about you, there is nothing for us to delete. To remove everything the app has stored, uninstall it, or clear its storage in Android's app settings. To remove what the app published to your own broker, delete the retained messages under the topic prefix h2wallpanel on that broker.</p>
+    <p>To request deletion or a copy of the license data we hold, email <a href="mailto:info@h2-ai.de">info@h2-ai.de</a>. Please give the Google Play order number (it starts with "GPA." and is in the receipt email from Google Play), the device ID, or both. The app shows the device ID in its settings under Premium as "Device ID for support" once the device has a license, or after "Restore license" found none. We answer within one month.</p>
+    <ul>
+        <li>With the order number, we delete the purchase with all its licenses, refunds and log entries. The license ends and cannot be restored.</li>
+        <li>With the device ID only, we end the license on that device and remove the device ID from all our records. The purchase itself stays recorded without the device ID, so that the same purchase cannot be registered again.</li>
+    </ul>
+    <p>Copies in encrypted backups disappear within 30 days. Google Play keeps its own records of the purchase.</p>
+    <p>To remove everything the app has stored on the device, uninstall it, or clear its storage in Android's app settings. To remove what the app published to your own broker, delete the retained messages under the topic prefix h2wallpanel and the panel's entry under homeassistant/device on that broker.</p>
 
-    <h2>11. Children's privacy</h2>
+    <h2>11. Recipients and your rights</h2>
+    <p>Recipients of the license data: Hetzner Online GmbH, Germany (hosting, as our processor), and Google (Google Play), which processes your purchase as the payment service and confirms purchases and refunds to our server. When you buy, we share the pseudonymous device ID with Google, which may also use it for its own purpose of detecting irregular purchase activity (section 8). Nobody else. We do not sell data and do not share it for advertising.</p>
+    <p>You have the right to access, rectification, erasure, restriction of processing, data portability and to object to processing based on legitimate interest (Art. 15-18, 20, 21 GDPR). You also have the right to lodge a complaint with a data protection supervisory authority, for example the State Commissioner for Data Protection and Freedom of Information Baden-W&uuml;rttemberg.</p>
+
+    <h2>12. Children's privacy</h2>
     <p>H2 Wall Panel is a tool for adults and is not directed at children. We do not knowingly collect data from children.</p>
 
-    <h2>12. Changes to this policy</h2>
+    <h2>13. Changes to this policy</h2>
     <p>We may update this policy. Changes are published on this page with a new revision date.</p>
 
-    <h2>13. Contact</h2>
+    <h2>14. Contact</h2>
     <p>
         <strong>H2-AI GmbH</strong><br>
         Amselrain 43<br>
@@ -124,48 +181,95 @@
         <p class="languages"><a href="#english">English</a> &middot; <a href="#deutsch">Deutsch</a></p>
 
         <h1 id="deutsch">Datenschutzerkl&auml;rung</h1>
-        <p class="updated">Stand: 22.09.2026</p>
+        <p class="updated">Stand: 30.09.2026</p>
 
         <h2>H2 Wall Panel</h2>
         <p>H2 Wall Panel ("die App") wird von der H2-AI GmbH entwickelt. Diese Erkl&auml;rung beschreibt, was die App mit Daten tut, was auf Ihrem Ger&auml;t bleibt und was es verl&auml;sst.</p>
-        <p>Kurz gefasst: Bei uns kommt nichts an. Es gibt kein Konto, keinen Cloud-Dienst und keinen Server, den wir betreiben. Alles, was die App sendet, geht an Server, die Sie selbst einrichten und kontrollieren.</p>
+        <p>Verantwortlicher: H2-AI GmbH, Amselrain 43, 75038 Oberderdingen, Deutschland, E-Mail: <a href="mailto:info@h2-ai.de">info@h2-ai.de</a></p>
+        <p>Kurz gefasst: Das Panel sendet seine Daten nur an Server, die Sie selbst einrichten und kontrollieren, an die Webseiten, die Sie auf dem Panel &ouml;ffnen, und f&uuml;r den Kauf an Google Play. Bei uns kommt nur an, was wir f&uuml;r die Lizenz brauchen: eine pseudonyme Ger&auml;tekennung und nach einem Kauf der Kaufbeleg von Google Play. Nutzen Sie nur die kostenlose Demo, sendet die App die pseudonyme Ger&auml;tekennung einmal f&uuml;r eine Pr&uuml;fung nach der Installation an uns und danach nichts mehr. Es gibt kein Konto, keine Analyse und keine Werbung.</p>
 
         <h2>1. Was wir erheben</h2>
-        <p>Wir erheben keine personenbezogenen Daten. Die H2-AI GmbH betreibt keinen Server, den diese App kontaktiert. Die App enth&auml;lt keine Analyse-Bibliothek, keine Absturzberichte und keine Werbebibliothek.</p>
+        <p>Wir erheben nur die in Abschnitt 3 d) beschriebenen Lizenzdaten: eine pseudonyme Ger&auml;tekennung, nach dem Kauf einer Lizenz den Kaufbeleg, und die technischen Protokolle unseres Lizenzservers. Die App enth&auml;lt keine Analyse-Bibliothek, keine Absturzberichte und keine Werbebibliothek. Nichts aus Ihrem Dashboard, Ihrem Broker, Ihrer Kamera oder Ihren Einstellungen wird jemals an uns gesendet.</p>
 
         <h2>2. Was auf dem Ger&auml;t bleibt</h2>
         <p>Folgendes wird ausschlie&szlig;lich lokal gespeichert und niemals an uns &uuml;bertragen:</p>
         <ul>
             <li>Ihre Einstellungen, also Dashboard-Adresse, Screensaver, Zeitplan und Ausrichtung, abgelegt &uuml;ber Android DataStore</li>
-            <li>Ihre Ausstiegs-PIN, gespeichert als Hashwert, nie im Klartext</li>
+            <li>Ihre Ausstiegs-PIN, gespeichert als gesalzener Hashwert (PBKDF2), nie im Klartext</li>
             <li>Ihr Home-Assistant-Zugriffstoken, verschl&uuml;sselt mit AES-256-GCM und einem Schl&uuml;ssel aus dem Android-Keystore</li>
             <li>Ihr MQTT-Broker-Passwort, auf demselben Weg verschl&uuml;sselt</li>
-            <li>Ihr Kaufstatus</li>
+            <li>F&uuml;r die automatische Anmeldung eine Kopie des Zugriffstokens im Browser-Speicher Ihrer Dashboard-Seite auf diesem Ger&auml;t, also dort, wo Home Assistant auch eine Anmeldung im Browser ablegt. Dieser Speicher geh&ouml;rt der App und ist f&uuml;r andere Apps nicht lesbar</li>
+            <li>Was der eingebaute Browser f&uuml;r die ge&ouml;ffneten Seiten aufbewahrt, etwa Cookies und Seitenspeicher, wie jeder Browser</li>
+            <li>Wenn Sie die Diashow nutzen, die Berechtigung, den einen von Ihnen gew&auml;hlten Ordner zu lesen. Die Bilder werden aus diesem Ordner gelesen und auf dem Bildschirm angezeigt, sonst nichts</li>
+            <li>Wenn Sie eine Lizenz gekauft haben: die Lizenz f&uuml;r dieses Ger&auml;t als von unserem Server signierte Datei, damit die Vollversion auch offline weiterl&auml;uft, und bis zur Best&auml;tigung der Lizenz der Kaufbeleg von Google Play. Die Lizenz selbst kommt von unserem Server, und der Kaufbeleg geht einmal dorthin, wie in Abschnitt 3 d) beschrieben</li>
         </ul>
         <p>Die Schl&uuml;ssel verlassen den hardwaregest&uuml;tzten Keystore des Ger&auml;ts nicht. Wird der Keystore zur&uuml;ckgesetzt, etwa durch Werksreset oder durch Einspielen einer Sicherung auf ein anderes Ger&auml;t, sind die gespeicherten Zugangsdaten nicht mehr lesbar und die App bittet Sie, sie erneut einzugeben.</p>
         <p>Die App ist von der Android-Cloud-Sicherung und von der Ger&auml;te&uuml;bertragung ausgenommen. Nichts davon landet in einer Google-Sicherung.</p>
 
         <h2>3. Was die App sendet, und wohin</h2>
-        <p>Die App kontaktiert ausschlie&szlig;lich zwei Arten von Zielen, die Sie beide selbst eintragen:</p>
+        <p>Die App kontaktiert Ziele, die Sie selbst w&auml;hlen, Google Play und f&uuml;r die Lizenz unseren Lizenzserver:</p>
 
-        <h3>a) Ihr Dashboard</h3>
-        <p>Die App l&auml;dt die Webadresse, die Sie eintragen. Das ist &uuml;blicherweise eine Home-Assistant-Instanz in Ihrem eigenen Netz. Wenn Sie ein Zugriffstoken hinterlegen, &uuml;bergibt die App es an genau diese Adresse, damit das Dashboard Sie anmeldet, so wie es ein Browser t&auml;te. Das Token geht ausschlie&szlig;lich an die von Ihnen eingetragene Adresse und an keine andere Seite.</p>
+        <h3>a) Ihr Dashboard und Seiten, die Sie von dort &ouml;ffnen</h3>
+        <p>Die App l&auml;dt die Webadresse, die Sie eintragen. Das ist &uuml;blicherweise eine Home-Assistant-Instanz in Ihrem eigenen Netz. Wenn Sie ein Zugriffstoken hinterlegen, &uuml;bergibt die App es an genau diese Adresse, damit das Dashboard Sie anmeldet, so wie es ein Browser t&auml;te. Das Token geht ausschlie&szlig;lich an die von Ihnen eingetragene Adresse (Schema, Host und Port) und an keine andere Seite.</p>
+        <p>Links auf Ihrem Dashboard &ouml;ffnen sich im Panel, wie in einem Browser. Eine so ge&ouml;ffnete Seite wird direkt von ihrem eigenen Server geladen, und es gilt die Datenschutzerkl&auml;rung dieser Seite. Wenn Sie "Only dashboard addresses in the browser" einschalten, &ouml;ffnen sich Links nur noch auf der Adresse Ihres Dashboards und auf den Zusatzadressen, die Sie eintragen.</p>
 
         <h3>b) Ihr MQTT-Broker, wenn Sie diese Funktion einschalten</h3>
-        <p>Die Anbindung an die Hausautomatisierung ist optional und bleibt aus, bis Sie einen Broker eintragen. Ist sie an, ver&ouml;ffentlicht die App folgende Informationen an den von Ihnen eingetragenen Broker:</p>
+        <p>Die Anbindung an die Hausautomatisierung geh&ouml;rt zur Vollversion. Sie ist optional und bleibt aus, bis Sie einen Broker eintragen und die Funktion einschalten. Ist sie an, ver&ouml;ffentlicht die App folgende Informationen an den von Ihnen eingetragenen Broker:</p>
         <ul>
             <li>Akkustand und ob das Ger&auml;t geladen wird</li>
-            <li>Ob der Bildschirm gerade etwas anzeigt</li>
-            <li>Ob die Kiosk-Sperre aktiv ist</li>
+            <li>Ob der Bildschirm gerade etwas anzeigt, seine Helligkeit und ob der Screensaver l&auml;uft</li>
+            <li>Ob der Kiosk l&auml;uft und ob die Kiosk-Sperre eingeschaltet ist</li>
+            <li>Ob das Panel ein Problem hat, das Dashboard zu zeigen, etwa weil es seine Offline-Seite zeigt</li>
             <li>Ob gerade ein geplantes Dunkelfenster l&auml;uft</li>
             <li>Ob Bewegung erkannt wurde, als Ja-oder-Nein-Wert</li>
             <li>Die WLAN-Signalst&auml;rke</li>
             <li>Die gerade angezeigte Adresse, auf 250 Zeichen gek&uuml;rzt</li>
-            <li>Die App-Version</li>
-            <li>Eine von der App erzeugte Ger&auml;tekennung, damit Ihr Dashboard mehrere Panels unterscheiden kann</li>
+            <li>Die App-Version und das Ger&auml;temodell</li>
+            <li>Eine Ger&auml;tekennung aus dem Ger&auml;temodell und den ersten acht Zeichen der Android-Ger&auml;te-ID sowie einen Panel-Namen, den Sie &auml;ndern k&ouml;nnen, damit Ihr Dashboard mehrere Panels unterscheiden kann</li>
         </ul>
-        <p>Die App abonniert auf demselben Broker au&szlig;erdem Befehlsthemen, damit Ihr Dashboard den Bildschirm schalten, die Helligkeit &auml;ndern, den Screensaver starten oder beenden, die Seite neu laden, den Kiosk neu starten oder das Panel auf eine andere Adresse schicken kann.</p>
+        <p>Die App abonniert auf demselben Broker au&szlig;erdem Befehlsthemen, damit Ihr Dashboard den Bildschirm schalten, die Helligkeit &auml;ndern, den Screensaver starten oder beenden, die Seite neu laden, den Kiosk-Bildschirm neu starten, das Panel auf eine andere Adresse Ihres Dashboards oder Ihrer Liste erlaubter Adressen schicken und, sofern Sie es in den Einstellungen nicht verbieten, die Kiosk-Sperre ein- oder ausschalten kann.</p>
         <p>Dieser Broker geh&ouml;rt Ihnen. Er l&auml;uft in aller Regel auf Ihrer eigenen Hardware in Ihrem eigenen Netz. Wir haben keinen Zugriff darauf und erhalten nichts davon. Sie k&ouml;nnen die Funktion jederzeit abschalten, dann ver&ouml;ffentlicht die App nichts mehr.</p>
+
+        <h3>c) Google Play</h3>
+        <p>Den Kauf in der App wickelt Google Play ab, und die App kann Google Play gelegentlich bitten, seinen Bewertungsdialog zu zeigen. Siehe Abschnitte 8 und 9.</p>
+
+        <h3>d) Unser Lizenzserver</h3>
+        <p>Die Vollversion wird als Lizenz f&uuml;r ein Ger&auml;t verkauft. Um die Lizenz an das Panel zu binden und zu pr&uuml;fen, spricht die App mit unserem Lizenzserver unter lizenz.h2-ai.de, immer &uuml;ber HTTPS.</p>
+        <p>Wann die App ihn anspricht:</p>
+        <ul>
+            <li>Einmal nach der Installation: Startet die App und ist auf dem Ger&auml;t keine Lizenz gespeichert, fragt sie unseren Server, ob f&uuml;r dieses Ger&auml;t eine Lizenz besteht, damit eine f&uuml;r dieses Ger&auml;t gekaufte Lizenz ohne Ihr Zutun zur&uuml;ckkommt, etwa nach einer Neuinstallation. Die Pr&uuml;fung wartet, bis das Ger&auml;t online ist. Hat unser Server geantwortet (Lizenz gefunden oder keine Lizenz), wiederholt die App diese automatische Pr&uuml;fung nicht. Kam keine Antwort, etwa weil das Ger&auml;t offline oder unser Server nicht erreichbar war, versucht die App es beim n&auml;chsten Start erneut.</li>
+            <li>Direkt nach dem Kauf einer Lizenz, um den Kauf zu registrieren.</li>
+            <li>Etwa einmal am Tag, solange eine Lizenz auf dem Ger&auml;t gespeichert ist und das Ger&auml;t online ist, um sie zu verl&auml;ngern. Ohne Verbindung l&auml;uft die Vollversion bis zu 30 Tage ab der letzten erfolgreichen Pr&uuml;fung weiter; nach 20 Tagen erinnert die App daran, das Ger&auml;t zu verbinden.</li>
+            <li>Wenn Sie auf "Restore license" tippen, etwa wenn die automatische Pr&uuml;fung unseren Server nicht erreicht hat.</li>
+        </ul>
+        <p>In keiner anderen Situation spricht die App den Lizenzserver an. Kaufen Sie nie eine Lizenz, sendet die App die pseudonyme Ger&auml;tekennung nur f&uuml;r die eine automatische Pr&uuml;fung nach der Installation an uns.</p>
+        <p>Was gesendet wird:</p>
+        <ul>
+            <li>Ger&auml;tekennung: ein SHA-256-Hashwert aus der Android-Ger&auml;te-ID (ANDROID_ID) und einem festen, app-eigenen Wert. Die Android-ID selbst erh&auml;lt unser Server nie. Der Wert bleibt bei einer Neuinstallation gleich und &auml;ndert sich nach einem Werksreset. Er ist ein anderer Wert als die MQTT-Ger&auml;tekennung aus b).</li>
+            <li>Kaufbeleg, nur wenn ein Kauf registriert wird: das Kauf-Token, das Google Play der App &uuml;bergibt, und die Kennung des gekauften Produkts.</li>
+            <li>Der Name der App ("wallpanel").</li>
+        </ul>
+        <p>Erh&auml;lt unser Server ein Kauf-Token, l&auml;sst er sich den Kauf von Google Play best&auml;tigen und erh&auml;lt von Google die Bestellnummer, die Menge, den Kaufstatus, ob es ein Testkauf war, und die Ger&auml;tekennung, die die App beim Kauf an Google Play &uuml;bergeben hat (Abschnitt 8). Er speichert Ger&auml;tekennung, Kauf-Token, Produktkennung, Bestellnummer, Menge, ob es ein Testkauf war, ob der Kauf verbraucht ist, und den Zeitpunkt der Registrierung. Zu jeder Lizenz h&auml;lt er eine Lizenzkennung, das gebundene Ger&auml;t und wann die Lizenz gebunden, entzogen oder umgezogen wurde, sowie ein Protokoll dieser Vorg&auml;nge. Danach meldet er den Kauf bei Google Play als verbraucht. Au&szlig;erdem ruft unser Server regelm&auml;&szlig;ig bei Google Play die Liste der erstatteten K&auml;ufe dieser App ab (Kauf-Token, Bestellnummer, Zeitpunkt, Menge, Grund) und bewahrt sie auf, damit ein erstatteter Kauf nicht zur Lizenz werden kann.</p>
+        <p>Die Lizenz, die der Server zur&uuml;ckschickt, enth&auml;lt die Ger&auml;tekennung, die Lizenzkennung und ihre G&uuml;ltigkeit und ist von unserem Server signiert. Sie wird auf Ihrem Ger&auml;t gespeichert (Abschnitt 2).</p>
+        <p>Wozu, und auf welcher Rechtsgrundlage:</p>
+        <ul>
+            <li>Um zu pr&uuml;fen, dass ein Kauf echt ist, ihn an das Ger&auml;t zu binden, auf dem gekauft wurde, und die Lizenz zu verl&auml;ngern und wiederherzustellen (Vertragserf&uuml;llung, Art. 6 Abs. 1 lit. b DSGVO).</li>
+            <li>Um Missbrauch zu verhindern: Ein Kauf l&auml;sst sich nur einmal und nur f&uuml;r das Ger&auml;t registrieren, auf dem gekauft wurde, und eine Lizenz wird entzogen, wenn Google Play meldet, dass der Kauf erstattet wurde (berechtigtes Interesse an Betrugsvermeidung, Art. 6 Abs. 1 lit. f DSGVO).</li>
+            <li>Um eine Lizenz nach einem Werksreset auf dasselbe Ger&auml;t umzuziehen, wenn Sie uns darum bitten (Art. 6 Abs. 1 lit. b DSGVO).</li>
+            <li>Um eine Lizenz ohne Ihr Zutun an das Ger&auml;t zur&uuml;ckzugeben, f&uuml;r das sie gekauft wurde, durch die automatische Pr&uuml;fung nach der Installation. Hat das Ger&auml;t eine Lizenz, dient das der Vertragserf&uuml;llung (Art. 6 Abs. 1 lit. b DSGVO). Hat es keine, st&uuml;tzt sich die Pr&uuml;fung auf unser berechtigtes Interesse, unseren Kunden ihre Lizenzen automatisch zur&uuml;ckzugeben und f&uuml;r ein bereits lizenziertes Ger&auml;t keinen zweiten Kauf anzubieten (Art. 6 Abs. 1 lit. f DSGVO). Die Antwort "keine Lizenz" wird auf unserem Server nicht gespeichert.</li>
+            <li>Die Android-Ger&auml;te-ID wird auf Ihrem Ger&auml;t nur in den oben genannten Situationen ausgelesen. Die Lizenz ist an das Ger&auml;t gebunden; nach unserer Auffassung ist es unbedingt erforderlich, das Ger&auml;t zu erkennen, auch um eine daf&uuml;r gekaufte Lizenz nach einer Neuinstallation wiederherzustellen, damit wir den lizenzierten Dienst erbringen k&ouml;nnen, den Sie nutzen (§ 25 Abs. 2 Nr. 2 TDDDG). F&uuml;r nichts anderes wird die Ger&auml;tekennung verwendet.</li>
+        </ul>
+        <p>Server-Protokolle: Unser Lizenzserver erh&auml;lt bei jeder Anfrage die IP-Adresse Ihres Ger&auml;ts. Der Webserver schreibt sie mit Uhrzeit, angefragter Adresse, Antwortcode und der technischen Kennung, die Android bei jeder Anfrage mitsendet (Android-Version, Ger&auml;temodell und Build-Nummer), in sein Zugriffsprotokoll. Das Zugriffsprotokoll wird nach h&ouml;chstens 15 Tagen gel&ouml;scht. Das gilt auch f&uuml;r die automatische Pr&uuml;fung nach der Installation; das Zugriffsprotokoll enth&auml;lt die Ger&auml;tekennung nicht. Wir nutzen es nur f&uuml;r den Betrieb des Servers und zur Abwehr von Angriffen, nicht zur Standortbestimmung, und f&uuml;hren es nicht mit den Lizenzdaten zusammen. Zur Missbrauchsbegrenzung z&auml;hlt der Server au&szlig;erdem die Anfragen je IP-Adresse f&uuml;r eine Minute, nur im Arbeitsspeicher. Der Lizenzdienst selbst schreibt kein Zugriffsprotokoll und protokolliert nie Ger&auml;tekennungen, Kauf-Tokens oder Bestellnummern.</p>
+        <p>Wie lange:</p>
+        <ul>
+            <li>Datens&auml;tze einer Lizenz, die noch nutzbar ist, bewahren wir auf, solange die Lizenz besteht.</li>
+            <li>Datens&auml;tze erstatteter oder entzogener Lizenzen l&ouml;schen wir 12 Monate nach dem letzten Entzug; so lange bleiben sie, damit derselbe Kauf nicht erneut registriert werden kann.</li>
+            <li>Eintr&auml;ge im Vorgangsprotokoll und von Google gemeldete Erstattungen zu nie registrierten K&auml;ufen l&ouml;schen wir nach 12 Monaten.</li>
+            <li>Eine Pr&uuml;fung ohne Treffer, etwa die automatische Pr&uuml;fung auf einem Ger&auml;t ohne Lizenz, wird nicht in unserer Datenbank gespeichert; es bleibt nur der Eintrag im Zugriffsprotokoll.</li>
+            <li>Verschl&uuml;sselte Sicherungen der Lizenzdatenbank bewahren wir 30 Tage auf, Server-Zugriffsprotokolle h&ouml;chstens 15 Tage.</li>
+        </ul>
+        <p>Die L&ouml;schung l&auml;uft automatisch einmal am Tag.</p>
+        <p>Wo: Der Lizenzserver l&auml;uft auf einem bei der Hetzner Online GmbH in Deutschland gemieteten Server; Hetzner verarbeitet die Daten in unserem Auftrag auf Grundlage eines Auftragsverarbeitungsvertrags. Verschl&uuml;sselte Sicherungen (GPG) entstehen jede Nacht und liegen auf unserem eigenen Dateiserver, den die H2-AI GmbH in Deutschland betreibt.</p>
 
         <h2>4. Kamera und Bewegungserkennung</h2>
         <p>Die Bewegungserkennung ist optional und bleibt aus, bis Sie sie einschalten. Sie nutzt die Frontkamera, und zwar nur, w&auml;hrend der Screensaver l&auml;uft. Sie l&auml;uft nie, w&auml;hrend das Dashboard sichtbar ist, und nie, w&auml;hrend der Bildschirm von Ihrem Dashboard aus ausgeschaltet wurde.</p>
@@ -175,40 +279,50 @@
 
         <h2>5. Berechtigungen</h2>
         <ul>
-            <li><strong>Bedienungshilfe-Dienst:</strong> ausschlie&szlig;lich f&uuml;r die Kiosk-Sperre. Er erkennt, wenn eine andere App in den Vordergrund kommt oder die Systemnavigation benutzt wird, und holt den Kiosk zur&uuml;ck. Bildschirminhalte werden nicht gelesen, nicht gespeichert und nicht &uuml;bertragen.</li>
-            <li><strong>&Uuml;ber anderen Apps anzeigen:</strong> f&uuml;r Screensaver, Statusleisten-Sperre und PIN-Dialog.</li>
-            <li><strong>Nutzungszugriff:</strong> pr&uuml;ft, welche App im Vordergrund ist, als zweiter, unabh&auml;ngiger Weg f&uuml;r die Kiosk-Sperre.</li>
-            <li><strong>Kamera:</strong> nur f&uuml;r die oben beschriebene optionale Bewegungserkennung.</li>
-            <li><strong>Start beim Hochfahren:</strong> damit das Panel nach einem Stromausfall von selbst wiederkommt.</li>
-            <li><strong>Wachhalten:</strong> damit das Panel an der Wand nicht einschl&auml;ft.</li>
-            <li><strong>Systemeinstellungen &auml;ndern:</strong> wird nur angefragt, wenn Sie eine feste Ausrichtung w&auml;hlen, und nur f&uuml;r die System-Rotationssperre benutzt.</li>
-            <li><strong>Internet und Netzwerkstatus:</strong> um Ihr Dashboard zu laden und Ihren Broker zu erreichen.</li>
+            <li>Bedienungshilfe-Dienst: ausschlie&szlig;lich, um den Kiosk gesperrt zu halten, solange der Kiosk-Modus l&auml;uft. Er erkennt, welche App oder welches Systemfenster in den Vordergrund kommt, und holt den Kiosk zur&uuml;ck, sperrt die Tasten Home und &Uuml;bersicht, z&auml;hlt Dr&uuml;cke auf "Lauter" f&uuml;r die Ausstiegsgeste und schlie&szlig;t die Benachrichtigungsleiste und das Power-Men&uuml;, jeweils nur, wenn die Option daf&uuml;r eingeschaltet ist. Um Benachrichtigungsleiste und Power-Men&uuml; zu unterscheiden, schaut er beim &Ouml;ffnen auf Titel und Knopfbeschriftungen dieser Systemfenster. Von anderen Apps nutzt er nur die Angabe, welche App vorn ist. Inhalte Ihres Dashboards oder anderer Apps liest er nicht, und er speichert und &uuml;bertr&auml;gt nichts.</li>
+            <li>&Uuml;ber anderen Apps anzeigen: f&uuml;r Screensaver, PIN-Dialog und, bis Android 11, die Statusleisten-Sperre.</li>
+            <li>Nutzungszugriff: pr&uuml;ft, welche App im Vordergrund ist, als zweiter, unabh&auml;ngiger Weg f&uuml;r die Kiosk-Sperre.</li>
+            <li>Kamera: nur f&uuml;r die oben beschriebene optionale Bewegungserkennung.</li>
+            <li>Start beim Hochfahren: damit das Panel nach einem Stromausfall von selbst wiederkommt.</li>
+            <li>Wachhalten: damit das Panel an der Wand nicht einschl&auml;ft.</li>
+            <li>Systemeinstellungen &auml;ndern: wird nur angefragt, wenn Sie eine feste Ausrichtung w&auml;hlen, und nur f&uuml;r die System-Rotationssperre benutzt.</li>
+            <li>Internet und Netzwerkstatus: um Ihr Dashboard zu laden, Ihren Broker zu erreichen und die Lizenz zu pr&uuml;fen.</li>
         </ul>
         <p>Diese Berechtigungen dienen ausschlie&szlig;lich dem Betrieb des Panels. Keine davon wird zur Datenerhebung genutzt.</p>
 
         <h2>6. Hintergrunddienste</h2>
-        <p>Die App betreibt Hintergrunddienste, um die Kiosk-Sperre zu halten, die Verbindung zu Ihrem Broker offen zu halten und, falls eingeschaltet, w&auml;hrend des Screensavers auf Bewegung zu achten. Diese Dienste halten das Panel unbeaufsichtigt am Laufen. An uns senden sie nichts.</p>
+        <p>Die App betreibt Hintergrunddienste, um die Kiosk-Sperre zu halten, die Verbindung zu Ihrem Broker offen zu halten und, falls eingeschaltet, w&auml;hrend des Screensavers auf Bewegung zu achten. Diese Dienste halten das Panel unbeaufsichtigt am Laufen. Au&szlig;er den Lizenzanfragen aus Abschnitt 3 d) geht nichts an uns.</p>
 
         <h2>7. Transportverschl&uuml;sselung</h2>
         <p>Ob die Verbindung zu Ihrem Dashboard und zu Ihrem Broker verschl&uuml;sselt ist, h&auml;ngt davon ab, wie Sie beides eingerichtet haben. Home Assistant und MQTT-Broker im Heimnetz laufen h&auml;ufig ohne TLS, und die App unterst&uuml;tzt das, weil sie sonst in einer typischen Heiminstallation nicht funktionieren w&uuml;rde. TLS wird unterst&uuml;tzt und von uns empfohlen. Die App warnt Sie, wenn Sie eine Adresse eintragen, bei der ein Zugriffstoken unverschl&uuml;sselt an einen &ouml;ffentlich erreichbaren Server ginge.</p>
-        <p>Weil eine unverschl&uuml;sselte Einrichtung m&ouml;glich ist, geben wir im Datensicherheitsabschnitt bei Google Play an, dass Daten nicht zwingend verschl&uuml;sselt &uuml;bertragen werden. Gemeint ist Verkehr innerhalb Ihres eigenen Netzes, zwischen Ihrem Tablet und Ihrem eigenen Server.</p>
+        <p>Weil eine unverschl&uuml;sselte Einrichtung m&ouml;glich ist, geben wir im Datensicherheitsabschnitt bei Google Play an, dass Daten nicht zwingend verschl&uuml;sselt &uuml;bertragen werden. Gemeint ist Verkehr innerhalb Ihres eigenen Netzes, zwischen Ihrem Tablet und Ihrem eigenen Server. Die Verbindung zu unserem Lizenzserver ist immer verschl&uuml;sselt (HTTPS); eine andere Verbindung dorthin baut die App nicht auf.</p>
 
         <h2>8. K&auml;ufe in der App</h2>
-        <p>Die Vollversion wird &uuml;ber einen einmaligen Kauf freigeschaltet, den Google Play abwickelt. Ihre Zahlungsdaten sehen wir nie. Wie Google mit Zahlungsdaten umgeht, steht unter <a href="https://policies.google.com/privacy">https://policies.google.com/privacy</a>.</p>
+        <p>Die Vollversion wird &uuml;ber einen Kauf in der App freigeschaltet, den Google Play abwickelt. Jeder Kauf ist eine Lizenz f&uuml;r das eine Ger&auml;t, auf dem gekauft wird. Ihre Zahlungsdaten, Ihren Namen und Ihr Google-Konto sehen wir nie. Beim Kauf &uuml;bergibt die App die pseudonyme Ger&auml;tekennung aus Abschnitt 3 d) an Google Play, damit der Kauf diesem Ger&auml;t zugeordnet werden kann; Google Play kann diesen Wert auch nutzen, um auff&auml;llige K&auml;ufe zu erkennen. Wie Google mit Kauf- und Zahlungsdaten umgeht, steht unter <a href="https://policies.google.com/privacy">https://policies.google.com/privacy</a>.</p>
 
         <h2>9. Dienste Dritter</h2>
-        <p>Die App nutzt Google Play Billing f&uuml;r den Kauf in der App. Weitere Dienste Dritter sind nicht eingebunden. Es gibt kein Werbe-SDK, kein Analyse-SDK und kein Absturzbericht-SDK in der App.</p>
+        <p>Die App nutzt zwei Bausteine von Google Play: Google Play Billing f&uuml;r den Kauf in der App und die Google Play In-App Review API, &uuml;ber die Google Play gelegentlich seinen eigenen Bewertungsdialog zeigt. Beide betreibt Google nach Googles Datenschutzerkl&auml;rung. Unser Lizenzserver nutzt die Google Play Developer API, um K&auml;ufe und Erstattungen zu best&auml;tigen (Abschnitt 3 d). Weitere Dienste Dritter sind nicht eingebunden. Es gibt kein Werbe-SDK, kein Analyse-SDK und kein Absturzbericht-SDK in der App.</p>
 
         <h2>10. L&ouml;schung</h2>
-        <p>Da wir keine Daten &uuml;ber Sie haben, gibt es bei uns nichts zu l&ouml;schen. Um alles zu entfernen, was die App gespeichert hat, deinstallieren Sie sie oder leeren Sie ihren Speicher in den Android-App-Einstellungen. Um zu entfernen, was die App an Ihren eigenen Broker gesendet hat, l&ouml;schen Sie dort die dauerhaft gespeicherten Nachrichten unter dem Themenpr&auml;fix h2wallpanel.</p>
+        <p>Um die L&ouml;schung oder eine Kopie der Lizenzdaten zu verlangen, die wir speichern, schreiben Sie an <a href="mailto:info@h2-ai.de">info@h2-ai.de</a>. Nennen Sie bitte die Google-Play-Bestellnummer (beginnt mit "GPA." und steht in der Kaufbest&auml;tigung von Google Play), die Ger&auml;tekennung oder beides. Die App zeigt die Ger&auml;tekennung in den Einstellungen unter Premium als "Device ID for support", sobald das Ger&auml;t eine Lizenz hat oder nachdem "Restore license" keine gefunden hat. Wir antworten innerhalb eines Monats.</p>
+        <ul>
+            <li>Mit der Bestellnummer l&ouml;schen wir den Kauf mit allen Lizenzen, Erstattungen und Protokolleintr&auml;gen. Die Lizenz endet und l&auml;sst sich nicht wiederherstellen.</li>
+            <li>Nur mit der Ger&auml;tekennung beenden wir die Lizenz auf diesem Ger&auml;t und entfernen die Ger&auml;tekennung aus allen Datens&auml;tzen. Der Kauf selbst bleibt ohne Ger&auml;tekennung vermerkt, damit derselbe Kauf nicht erneut registriert werden kann.</li>
+        </ul>
+        <p>Kopien in verschl&uuml;sselten Sicherungen verschwinden innerhalb von 30 Tagen. Google Play bewahrt eigene Aufzeichnungen &uuml;ber den Kauf auf.</p>
+        <p>Um alles zu entfernen, was die App auf dem Ger&auml;t gespeichert hat, deinstallieren Sie sie oder leeren Sie ihren Speicher in den Android-App-Einstellungen. Um zu entfernen, was die App an Ihren eigenen Broker gesendet hat, l&ouml;schen Sie dort die dauerhaft gespeicherten Nachrichten unter dem Themenpr&auml;fix h2wallpanel und den Eintrag des Panels unter homeassistant/device.</p>
 
-        <h2>11. Kinder</h2>
+        <h2>11. Empf&auml;nger und Ihre Rechte</h2>
+        <p>Empf&auml;nger der Lizenzdaten: die Hetzner Online GmbH, Deutschland (Hosting, als unser Auftragsverarbeiter), und Google (Google Play), das Ihren Kauf als Zahlungsdienst abwickelt und unserem Server K&auml;ufe und Erstattungen best&auml;tigt. Beim Kauf geben wir die pseudonyme Ger&auml;tekennung an Google weiter, das sie auch f&uuml;r eigene Zwecke nutzen kann, um auff&auml;llige K&auml;ufe zu erkennen (Abschnitt 8). Sonst niemand. Wir verkaufen keine Daten und geben sie nicht f&uuml;r Werbung weiter.</p>
+        <p>Sie haben das Recht auf Auskunft, Berichtigung, L&ouml;schung, Einschr&auml;nkung der Verarbeitung, Daten&uuml;bertragbarkeit und auf Widerspruch gegen Verarbeitungen aufgrund berechtigten Interesses (Art. 15 bis 18, 20, 21 DSGVO). Sie haben au&szlig;erdem das Recht, sich bei einer Datenschutz-Aufsichtsbeh&ouml;rde zu beschweren, etwa beim Landesbeauftragten f&uuml;r den Datenschutz und die Informationsfreiheit Baden-W&uuml;rttemberg.</p>
+
+        <h2>12. Kinder</h2>
         <p>H2 Wall Panel ist ein Werkzeug f&uuml;r Erwachsene und richtet sich nicht an Kinder. Wir erheben wissentlich keine Daten von Kindern.</p>
 
-        <h2>12. &Auml;nderungen</h2>
+        <h2>13. &Auml;nderungen</h2>
         <p>Wir k&ouml;nnen diese Erkl&auml;rung &auml;ndern. &Auml;nderungen werden auf dieser Seite mit einem neuen Datum ver&ouml;ffentlicht.</p>
 
-        <h2>13. Kontakt</h2>
+        <h2>14. Kontakt</h2>
         <p>
             <strong>H2-AI GmbH</strong><br>
             Amselrain 43<br>
