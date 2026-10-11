@@ -25,15 +25,16 @@
     <p class="languages"><a href="#english">English</a> &middot; <a href="#deutsch">Deutsch</a></p>
 
     <h1 id="english">Privacy Policy</h1>
-    <p class="updated">Last updated: September 30, 2026</p>
+    <p class="updated">Last updated: October 11, 2026</p>
 
     <h2>H2 Wall Panel</h2>
     <p>H2 Wall Panel ("the app") is developed by H2-AI GmbH, Germany. This privacy policy explains what the app does with data, what stays on your device and what leaves it.</p>
     <p>Controller: H2-AI GmbH, Amselrain 43, 75038 Oberderdingen, Germany, Email: <a href="mailto:info@h2-ai.de">info@h2-ai.de</a></p>
     <p>The short version: the panel sends its data only to servers that you set up and control yourself, to the web pages you open on the panel, and to Google Play for the purchase. The only thing that reaches us is what we need for the license: a pseudonymous device ID and, after a purchase, the Google Play purchase receipt. If you only use the free demo, the app sends the pseudonymous device ID to us once, for a check after installation, and nothing after that. There is no account, no analytics and no advertising.</p>
+    <p>Since version 1.1.0, you can enter a creator code before buying. To check it, the app sends only the code to our server, without any device ID (section 3 d), "Creator codes").</p>
 
     <h2>1. What we collect</h2>
-    <p>We collect only the license data described in section 3 d): a pseudonymous device ID, the purchase receipt after you buy a license, and the technical server logs of our license server. The app contains no analytics, no crash reporting and no advertising libraries of any kind. Nothing from your dashboard, your broker, your camera or your settings is ever sent to us.</p>
+    <p>We collect only the license data described in section 3 d): a pseudonymous device ID, the purchase receipt after you buy a license, a creator code if you enter one, and the technical server logs of our license server. The app contains no analytics, no crash reporting and no advertising libraries of any kind. Nothing from your dashboard, your broker, your camera or your settings is ever sent to us.</p>
 
     <h2>2. What stays on your device</h2>
     <p>The following is stored locally on the device and is never transmitted to us:</p>
@@ -46,6 +47,7 @@
         <li>What the built-in browser keeps for the pages you open, such as cookies and page storage, as any browser does</li>
         <li>If you use the photo slideshow, the permission to read the one folder you picked. The pictures are read from that folder and shown on the screen, nothing else</li>
         <li>If you bought a license: the license for this device as a file signed by our server, so the full version keeps working offline, and until the license is confirmed, the Google Play purchase receipt. The license itself comes from our server, and the receipt is sent to it once, as described in section 3 d)</li>
+        <li>If you bought with a creator code: the code, until the purchase has been registered with our server. The code is sent to our server as described in section 3 d)</li>
     </ul>
     <p>The encryption keys never leave the device's hardware-backed keystore. If the keystore is reset, for example by a factory reset or by restoring a backup to a different device, the stored credentials become unreadable and the app asks you to enter them again.</p>
     <p>The app is excluded from Android's cloud backup and from device-to-device transfer, so none of this data is copied into a Google backup.</p>
@@ -82,9 +84,10 @@
     <p>When the app contacts it:</p>
     <ul>
         <li>Once after the app is installed: when the app starts and no license is stored on the device, it asks our server whether this device has a license, so that a license bought for this device comes back without you having to do anything, for example after reinstalling the app. This check waits until the device is online. Once our server has answered (license found or no license), the app does not repeat this automatic check. If there was no answer, for example because the device was offline or our server could not be reached, the app tries again the next time it starts.</li>
-        <li>Right after you buy a license, to register the purchase.</li>
+        <li>Right after you buy a license, to register the purchase. This also applies to a license you got with a promo code redeemed in the Google Play Store: the app registers it the next time it checks your purchases with Google Play. Such a purchase carries no device ID, so it is assigned to the first device of your Google account that registers it and does not have a license yet.</li>
         <li>About once a day while a license is stored on the device and the device is online, to renew it. Without a connection, the full version keeps working for up to 30 days from the last successful check; after 20 days the app reminds you to connect.</li>
         <li>When you tap "Restore license", for example if the automatic check could not reach our server.</li>
+        <li>When you enter a creator code and tap "Apply", to check the code. This request contains only the code and the name of the app, no device ID (see "Creator codes" below).</li>
     </ul>
     <p>The app does not contact the license server in any other situation. If you never buy a license, the app sends the pseudonymous device ID to us only for the one automatic check after installation.</p>
     <p>What is sent:</p>
@@ -92,8 +95,9 @@
         <li>Device ID: a SHA-256 hash of Android's device ID (ANDROID_ID) combined with a fixed value specific to this app. Our server never receives the Android ID itself. The value stays the same when you reinstall the app and changes after a factory reset. It is a different value from the MQTT device identifier in b).</li>
         <li>Purchase receipt, only when a purchase is registered: the purchase token that Google Play gives the app, and the ID of the product bought.</li>
         <li>The name of the app ("wallpanel").</li>
+        <li>Creator code, only if you entered one: when the code is checked, and again together with the purchase receipt when the purchase is registered.</li>
     </ul>
-    <p>When our server receives a purchase token, it asks Google Play to confirm the purchase and receives from Google the order number, the quantity, the purchase state, whether it was a test purchase and the device ID that the app passed to Google Play when you bought (section 8). It stores the device ID, the purchase token, the product ID, the order number, the quantity, whether it was a test purchase, whether the purchase has been consumed, and the time of registration. For each license it keeps a license ID, the device it is bound to and when it was bound, withdrawn or moved, and a log of these events. It then marks the purchase as consumed at Google Play. Our server also regularly fetches from Google Play the list of refunded purchases of this app (purchase token, order number, time, quantity, reason) and keeps it, so that a refunded purchase cannot become a license.</p>
+    <p>When our server receives a purchase token, it asks Google Play to confirm the purchase and receives from Google the order number, the quantity, the purchase state, whether it was a test purchase, the device ID that the app passed to Google Play when you bought (section 8), the time of the purchase and, if you bought at a discount, which discount offer was used. It stores the device ID, the purchase token, the product ID, the order number, the quantity, whether it was a test purchase, whether the purchase has been consumed, and the time of registration. For each license it keeps a license ID, the device it is bound to and when it was bound, withdrawn or moved, and a log of these events. It then marks the purchase as consumed at Google Play. Our server also regularly fetches from Google Play the list of refunded purchases of this app (purchase token, order number, time, quantity, reason) and keeps it, so that a refunded purchase cannot become a license.</p>
     <p>The license the server sends back contains the device ID, the license ID and how long it is valid, and is signed by our server. It is stored on your device (section 2).</p>
     <p>Why, and on which legal basis:</p>
     <ul>
@@ -101,6 +105,7 @@
         <li>To stop misuse: a purchase can only be registered once and only for the device it was bought on, and a license is withdrawn when Google Play reports that the purchase was refunded (legitimate interest in preventing fraud, Art. 6(1)(f) GDPR).</li>
         <li>To move a license to the same device after a factory reset, if you ask us to (Art. 6(1)(b) GDPR).</li>
         <li>To give a license back to the device it was bought for without you having to ask, through the automatic check after installation. If the device has a license, this serves the contract (Art. 6(1)(b) GDPR). If it has none, the check is based on our legitimate interest in returning licenses to our customers automatically and in not offering a second purchase for a device that is already licensed (Art. 6(1)(f) GDPR). The answer "no license" is not stored on our server.</li>
+        <li>To check a creator code and to count a purchase made with it for the creator who handed out the code, so that we can pay the creator for the purchases made with their code (legitimate interest in working with creators and settling their commission, Art. 6(1)(f) GDPR; see "Creator codes" below).</li>
         <li>Reading the Android device ID on your device is only done in the situations listed above. The license is bound to the device, and in our view recognising the device, including restoring a license bought for it after a reinstallation, is strictly necessary to provide the licensed service you use (Section 25(2) no. 2 of the German TDDDG). The device ID is used for nothing else.</li>
     </ul>
     <p>Server logs: our license server receives your device's IP address with each request. The web server writes it to its access log together with the time, the requested address, the response code and the technical identification that Android sends with each request (Android version, device model and build number). The access log is deleted after at most 15 days. This also applies to the automatic check after installation; the access log does not contain the device ID. We use it only to operate the server and to fend off attacks; we do not use it to determine your location and do not combine it with the license data. To limit abuse, the server also counts requests per IP address for one minute, in memory only. The license service itself writes no access log and never logs device IDs, purchase tokens or order numbers.</p>
@@ -110,10 +115,14 @@
         <li>Records of refunded or withdrawn licenses are deleted 12 months after the last withdrawal; they are kept that long so that the same purchase cannot be registered again.</li>
         <li>Entries in the event log, and refunds reported by Google for purchases that were never registered, are deleted after 12 months.</li>
         <li>A check that finds no license, such as the automatic check on a device without a license, is not stored in our database; only the access log entry remains.</li>
+        <li>The link between a purchase and the creator code it was made with is kept as long as the purchase record and deleted together with it.</li>
+        <li>Checking a creator code is not stored in our database; only the access log entry remains.</li>
         <li>Encrypted backups of the license database are kept for 30 days, server access logs for at most 15 days.</li>
     </ul>
     <p>Deletion runs automatically once a day.</p>
     <p>Where: the license server runs on a server rented from Hetzner Online GmbH in Germany, which processes the data on our behalf under a data processing agreement. Encrypted backups (GPG) are made every night and stored on our own file server, operated by H2-AI GmbH in Germany.</p>
+    <p>Creator codes: creators (for example video makers who present the app) can hand out a code that unlocks a discount at Google Play. Entering a code is optional. When you tap "Apply", the app sends the code and the name of the app to our server; our server only answers whether the code can be used and which discount offer belongs to it. This check sends no device ID and is not stored in our database. If you then buy, Google Play processes the purchase with that discount offer, and the app sends the code to our server together with the purchase receipt (see "What is sent" above). Our server counts the purchase for the creator only if Google Play confirms that it was made with the creator's discount offer. It stores which purchase was made with which code. You get your license whether or not the purchase is counted.</p>
+    <p>We use this only to settle the creator's commission. The creator receives from us only the number of purchases made with their code (including how many were refunded); never your device ID, order number or other information about you.</p>
 
     <h2>4. Camera and motion detection</h2>
     <p>Motion detection is optional and switched off until you turn it on. It uses the front camera, and only while the screensaver is running. It never runs while the dashboard is visible, and never while the screen has been switched off from your dashboard.</p>
@@ -150,14 +159,14 @@
     <h2>10. Data deletion</h2>
     <p>To request deletion or a copy of the license data we hold, email <a href="mailto:info@h2-ai.de">info@h2-ai.de</a>. Please give the Google Play order number (it starts with "GPA." and is in the receipt email from Google Play), the device ID, or both. The app shows the device ID in its settings under Premium as "Device ID for support" once the device has a license, or after "Restore license" found none. We answer within one month.</p>
     <ul>
-        <li>With the order number, we delete the purchase with all its licenses, refunds and log entries. The license ends and cannot be restored.</li>
+        <li>With the order number, we delete the purchase with all its licenses, refunds, log entries and its link to a creator code. The license ends and cannot be restored.</li>
         <li>With the device ID only, we end the license on that device and remove the device ID from all our records. The purchase itself stays recorded without the device ID, so that the same purchase cannot be registered again.</li>
     </ul>
     <p>Copies in encrypted backups disappear within 30 days. Google Play keeps its own records of the purchase.</p>
     <p>To remove everything the app has stored on the device, uninstall it, or clear its storage in Android's app settings. To remove what the app published to your own broker, delete the retained messages under the topic prefix h2wallpanel and the panel's entry under homeassistant/device on that broker.</p>
 
     <h2>11. Recipients and your rights</h2>
-    <p>Recipients of the license data: Hetzner Online GmbH, Germany (hosting, as our processor), and Google (Google Play), which processes your purchase as the payment service and confirms purchases and refunds to our server. When you buy, we share the pseudonymous device ID with Google, which may also use it for its own purpose of detecting irregular purchase activity (section 8). Nobody else. We do not sell data and do not share it for advertising.</p>
+    <p>Recipients of the license data: Hetzner Online GmbH, Germany (hosting, as our processor), and Google (Google Play), which processes your purchase as the payment service and confirms purchases and refunds to our server. When you buy, we share the pseudonymous device ID with Google, which may also use it for its own purpose of detecting irregular purchase activity (section 8). Creators receive only the number of purchases made with their code, no personal data (section 3 d), "Creator codes"). Nobody else. We do not sell data and do not share it for advertising.</p>
     <p>You have the right to access, rectification, erasure, restriction of processing, data portability and to object to processing based on legitimate interest (Art. 15-18, 20, 21 GDPR). You also have the right to lodge a complaint with a data protection supervisory authority, for example the State Commissioner for Data Protection and Freedom of Information Baden-W&uuml;rttemberg.</p>
 
     <h2>12. Children's privacy</h2>
@@ -181,15 +190,16 @@
         <p class="languages"><a href="#english">English</a> &middot; <a href="#deutsch">Deutsch</a></p>
 
         <h1 id="deutsch">Datenschutzerkl&auml;rung</h1>
-        <p class="updated">Stand: 30.09.2026</p>
+        <p class="updated">Stand: 11.10.2026</p>
 
         <h2>H2 Wall Panel</h2>
         <p>H2 Wall Panel ("die App") wird von der H2-AI GmbH entwickelt. Diese Erkl&auml;rung beschreibt, was die App mit Daten tut, was auf Ihrem Ger&auml;t bleibt und was es verl&auml;sst.</p>
         <p>Verantwortlicher: H2-AI GmbH, Amselrain 43, 75038 Oberderdingen, Deutschland, E-Mail: <a href="mailto:info@h2-ai.de">info@h2-ai.de</a></p>
         <p>Kurz gefasst: Das Panel sendet seine Daten nur an Server, die Sie selbst einrichten und kontrollieren, an die Webseiten, die Sie auf dem Panel &ouml;ffnen, und f&uuml;r den Kauf an Google Play. Bei uns kommt nur an, was wir f&uuml;r die Lizenz brauchen: eine pseudonyme Ger&auml;tekennung und nach einem Kauf der Kaufbeleg von Google Play. Nutzen Sie nur die kostenlose Demo, sendet die App die pseudonyme Ger&auml;tekennung einmal f&uuml;r eine Pr&uuml;fung nach der Installation an uns und danach nichts mehr. Es gibt kein Konto, keine Analyse und keine Werbung.</p>
+        <p>Seit Version 1.1.0 k&ouml;nnen Sie vor dem Kauf einen Creator-Code eingeben. Zur Pr&uuml;fung sendet die App nur den Code an unseren Server, ohne Ger&auml;tekennung (Abschnitt 3 d), "Creator-Codes").</p>
 
         <h2>1. Was wir erheben</h2>
-        <p>Wir erheben nur die in Abschnitt 3 d) beschriebenen Lizenzdaten: eine pseudonyme Ger&auml;tekennung, nach dem Kauf einer Lizenz den Kaufbeleg, und die technischen Protokolle unseres Lizenzservers. Die App enth&auml;lt keine Analyse-Bibliothek, keine Absturzberichte und keine Werbebibliothek. Nichts aus Ihrem Dashboard, Ihrem Broker, Ihrer Kamera oder Ihren Einstellungen wird jemals an uns gesendet.</p>
+        <p>Wir erheben nur die in Abschnitt 3 d) beschriebenen Lizenzdaten: eine pseudonyme Ger&auml;tekennung, nach dem Kauf einer Lizenz den Kaufbeleg, einen Creator-Code, wenn Sie einen eingeben, und die technischen Protokolle unseres Lizenzservers. Die App enth&auml;lt keine Analyse-Bibliothek, keine Absturzberichte und keine Werbebibliothek. Nichts aus Ihrem Dashboard, Ihrem Broker, Ihrer Kamera oder Ihren Einstellungen wird jemals an uns gesendet.</p>
 
         <h2>2. Was auf dem Ger&auml;t bleibt</h2>
         <p>Folgendes wird ausschlie&szlig;lich lokal gespeichert und niemals an uns &uuml;bertragen:</p>
@@ -202,6 +212,7 @@
             <li>Was der eingebaute Browser f&uuml;r die ge&ouml;ffneten Seiten aufbewahrt, etwa Cookies und Seitenspeicher, wie jeder Browser</li>
             <li>Wenn Sie die Diashow nutzen, die Berechtigung, den einen von Ihnen gew&auml;hlten Ordner zu lesen. Die Bilder werden aus diesem Ordner gelesen und auf dem Bildschirm angezeigt, sonst nichts</li>
             <li>Wenn Sie eine Lizenz gekauft haben: die Lizenz f&uuml;r dieses Ger&auml;t als von unserem Server signierte Datei, damit die Vollversion auch offline weiterl&auml;uft, und bis zur Best&auml;tigung der Lizenz der Kaufbeleg von Google Play. Die Lizenz selbst kommt von unserem Server, und der Kaufbeleg geht einmal dorthin, wie in Abschnitt 3 d) beschrieben</li>
+            <li>Wenn Sie mit einem Creator-Code gekauft haben: der Code, bis der Kauf bei unserem Server registriert ist. Der Code geht an unseren Server, wie in Abschnitt 3 d) beschrieben</li>
         </ul>
         <p>Die Schl&uuml;ssel verlassen den hardwaregest&uuml;tzten Keystore des Ger&auml;ts nicht. Wird der Keystore zur&uuml;ckgesetzt, etwa durch Werksreset oder durch Einspielen einer Sicherung auf ein anderes Ger&auml;t, sind die gespeicherten Zugangsdaten nicht mehr lesbar und die App bittet Sie, sie erneut einzugeben.</p>
         <p>Die App ist von der Android-Cloud-Sicherung und von der Ger&auml;te&uuml;bertragung ausgenommen. Nichts davon landet in einer Google-Sicherung.</p>
@@ -238,9 +249,10 @@
         <p>Wann die App ihn anspricht:</p>
         <ul>
             <li>Einmal nach der Installation: Startet die App und ist auf dem Ger&auml;t keine Lizenz gespeichert, fragt sie unseren Server, ob f&uuml;r dieses Ger&auml;t eine Lizenz besteht, damit eine f&uuml;r dieses Ger&auml;t gekaufte Lizenz ohne Ihr Zutun zur&uuml;ckkommt, etwa nach einer Neuinstallation. Die Pr&uuml;fung wartet, bis das Ger&auml;t online ist. Hat unser Server geantwortet (Lizenz gefunden oder keine Lizenz), wiederholt die App diese automatische Pr&uuml;fung nicht. Kam keine Antwort, etwa weil das Ger&auml;t offline oder unser Server nicht erreichbar war, versucht die App es beim n&auml;chsten Start erneut.</li>
-            <li>Direkt nach dem Kauf einer Lizenz, um den Kauf zu registrieren.</li>
+            <li>Direkt nach dem Kauf einer Lizenz, um den Kauf zu registrieren. Das gilt auch f&uuml;r eine Lizenz, die Sie mit einem im Google Play Store eingel&ouml;sten Aktionscode erhalten haben: Die App registriert sie, sobald sie das n&auml;chste Mal Ihre K&auml;ufe bei Google Play abfragt. Ein solcher Kauf tr&auml;gt keine Ger&auml;tekennung; er wird daher dem ersten Ger&auml;t Ihres Google-Kontos zugeordnet, das ihn registriert und noch keine Lizenz hat.</li>
             <li>Etwa einmal am Tag, solange eine Lizenz auf dem Ger&auml;t gespeichert ist und das Ger&auml;t online ist, um sie zu verl&auml;ngern. Ohne Verbindung l&auml;uft die Vollversion bis zu 30 Tage ab der letzten erfolgreichen Pr&uuml;fung weiter; nach 20 Tagen erinnert die App daran, das Ger&auml;t zu verbinden.</li>
             <li>Wenn Sie auf "Restore license" tippen, etwa wenn die automatische Pr&uuml;fung unseren Server nicht erreicht hat.</li>
+            <li>Wenn Sie einen Creator-Code eingeben und auf "Apply" tippen, um den Code zu pr&uuml;fen. Diese Anfrage enth&auml;lt nur den Code und den Namen der App, keine Ger&auml;tekennung (siehe "Creator-Codes" unten).</li>
         </ul>
         <p>In keiner anderen Situation spricht die App den Lizenzserver an. Kaufen Sie nie eine Lizenz, sendet die App die pseudonyme Ger&auml;tekennung nur f&uuml;r die eine automatische Pr&uuml;fung nach der Installation an uns.</p>
         <p>Was gesendet wird:</p>
@@ -248,8 +260,9 @@
             <li>Ger&auml;tekennung: ein SHA-256-Hashwert aus der Android-Ger&auml;te-ID (ANDROID_ID) und einem festen, app-eigenen Wert. Die Android-ID selbst erh&auml;lt unser Server nie. Der Wert bleibt bei einer Neuinstallation gleich und &auml;ndert sich nach einem Werksreset. Er ist ein anderer Wert als die MQTT-Ger&auml;tekennung aus b).</li>
             <li>Kaufbeleg, nur wenn ein Kauf registriert wird: das Kauf-Token, das Google Play der App &uuml;bergibt, und die Kennung des gekauften Produkts.</li>
             <li>Der Name der App ("wallpanel").</li>
+            <li>Creator-Code, nur wenn Sie einen eingegeben haben: bei der Pr&uuml;fung des Codes und noch einmal zusammen mit dem Kaufbeleg, wenn der Kauf registriert wird.</li>
         </ul>
-        <p>Erh&auml;lt unser Server ein Kauf-Token, l&auml;sst er sich den Kauf von Google Play best&auml;tigen und erh&auml;lt von Google die Bestellnummer, die Menge, den Kaufstatus, ob es ein Testkauf war, und die Ger&auml;tekennung, die die App beim Kauf an Google Play &uuml;bergeben hat (Abschnitt 8). Er speichert Ger&auml;tekennung, Kauf-Token, Produktkennung, Bestellnummer, Menge, ob es ein Testkauf war, ob der Kauf verbraucht ist, und den Zeitpunkt der Registrierung. Zu jeder Lizenz h&auml;lt er eine Lizenzkennung, das gebundene Ger&auml;t und wann die Lizenz gebunden, entzogen oder umgezogen wurde, sowie ein Protokoll dieser Vorg&auml;nge. Danach meldet er den Kauf bei Google Play als verbraucht. Au&szlig;erdem ruft unser Server regelm&auml;&szlig;ig bei Google Play die Liste der erstatteten K&auml;ufe dieser App ab (Kauf-Token, Bestellnummer, Zeitpunkt, Menge, Grund) und bewahrt sie auf, damit ein erstatteter Kauf nicht zur Lizenz werden kann.</p>
+        <p>Erh&auml;lt unser Server ein Kauf-Token, l&auml;sst er sich den Kauf von Google Play best&auml;tigen und erh&auml;lt von Google die Bestellnummer, die Menge, den Kaufstatus, ob es ein Testkauf war, die Ger&auml;tekennung, die die App beim Kauf an Google Play &uuml;bergeben hat (Abschnitt 8), den Zeitpunkt des Kaufs und, wenn Sie mit Rabatt gekauft haben, welches Rabattangebot genutzt wurde. Er speichert Ger&auml;tekennung, Kauf-Token, Produktkennung, Bestellnummer, Menge, ob es ein Testkauf war, ob der Kauf verbraucht ist, und den Zeitpunkt der Registrierung. Zu jeder Lizenz h&auml;lt er eine Lizenzkennung, das gebundene Ger&auml;t und wann die Lizenz gebunden, entzogen oder umgezogen wurde, sowie ein Protokoll dieser Vorg&auml;nge. Danach meldet er den Kauf bei Google Play als verbraucht. Au&szlig;erdem ruft unser Server regelm&auml;&szlig;ig bei Google Play die Liste der erstatteten K&auml;ufe dieser App ab (Kauf-Token, Bestellnummer, Zeitpunkt, Menge, Grund) und bewahrt sie auf, damit ein erstatteter Kauf nicht zur Lizenz werden kann.</p>
         <p>Die Lizenz, die der Server zur&uuml;ckschickt, enth&auml;lt die Ger&auml;tekennung, die Lizenzkennung und ihre G&uuml;ltigkeit und ist von unserem Server signiert. Sie wird auf Ihrem Ger&auml;t gespeichert (Abschnitt 2).</p>
         <p>Wozu, und auf welcher Rechtsgrundlage:</p>
         <ul>
@@ -257,6 +270,7 @@
             <li>Um Missbrauch zu verhindern: Ein Kauf l&auml;sst sich nur einmal und nur f&uuml;r das Ger&auml;t registrieren, auf dem gekauft wurde, und eine Lizenz wird entzogen, wenn Google Play meldet, dass der Kauf erstattet wurde (berechtigtes Interesse an Betrugsvermeidung, Art. 6 Abs. 1 lit. f DSGVO).</li>
             <li>Um eine Lizenz nach einem Werksreset auf dasselbe Ger&auml;t umzuziehen, wenn Sie uns darum bitten (Art. 6 Abs. 1 lit. b DSGVO).</li>
             <li>Um eine Lizenz ohne Ihr Zutun an das Ger&auml;t zur&uuml;ckzugeben, f&uuml;r das sie gekauft wurde, durch die automatische Pr&uuml;fung nach der Installation. Hat das Ger&auml;t eine Lizenz, dient das der Vertragserf&uuml;llung (Art. 6 Abs. 1 lit. b DSGVO). Hat es keine, st&uuml;tzt sich die Pr&uuml;fung auf unser berechtigtes Interesse, unseren Kunden ihre Lizenzen automatisch zur&uuml;ckzugeben und f&uuml;r ein bereits lizenziertes Ger&auml;t keinen zweiten Kauf anzubieten (Art. 6 Abs. 1 lit. f DSGVO). Die Antwort "keine Lizenz" wird auf unserem Server nicht gespeichert.</li>
+            <li>Um einen Creator-Code zu pr&uuml;fen und einen damit get&auml;tigten Kauf dem Creator zuzurechnen, der den Code ausgegeben hat, damit wir den Creator f&uuml;r die K&auml;ufe mit seinem Code bezahlen k&ouml;nnen (berechtigtes Interesse an der Zusammenarbeit mit Creators und an der Abrechnung ihrer Provision, Art. 6 Abs. 1 lit. f DSGVO; siehe "Creator-Codes" unten).</li>
             <li>Die Android-Ger&auml;te-ID wird auf Ihrem Ger&auml;t nur in den oben genannten Situationen ausgelesen. Die Lizenz ist an das Ger&auml;t gebunden; nach unserer Auffassung ist es unbedingt erforderlich, das Ger&auml;t zu erkennen, auch um eine daf&uuml;r gekaufte Lizenz nach einer Neuinstallation wiederherzustellen, damit wir den lizenzierten Dienst erbringen k&ouml;nnen, den Sie nutzen (§ 25 Abs. 2 Nr. 2 TDDDG). F&uuml;r nichts anderes wird die Ger&auml;tekennung verwendet.</li>
         </ul>
         <p>Server-Protokolle: Unser Lizenzserver erh&auml;lt bei jeder Anfrage die IP-Adresse Ihres Ger&auml;ts. Der Webserver schreibt sie mit Uhrzeit, angefragter Adresse, Antwortcode und der technischen Kennung, die Android bei jeder Anfrage mitsendet (Android-Version, Ger&auml;temodell und Build-Nummer), in sein Zugriffsprotokoll. Das Zugriffsprotokoll wird nach h&ouml;chstens 15 Tagen gel&ouml;scht. Das gilt auch f&uuml;r die automatische Pr&uuml;fung nach der Installation; das Zugriffsprotokoll enth&auml;lt die Ger&auml;tekennung nicht. Wir nutzen es nur f&uuml;r den Betrieb des Servers und zur Abwehr von Angriffen, nicht zur Standortbestimmung, und f&uuml;hren es nicht mit den Lizenzdaten zusammen. Zur Missbrauchsbegrenzung z&auml;hlt der Server au&szlig;erdem die Anfragen je IP-Adresse f&uuml;r eine Minute, nur im Arbeitsspeicher. Der Lizenzdienst selbst schreibt kein Zugriffsprotokoll und protokolliert nie Ger&auml;tekennungen, Kauf-Tokens oder Bestellnummern.</p>
@@ -266,10 +280,14 @@
             <li>Datens&auml;tze erstatteter oder entzogener Lizenzen l&ouml;schen wir 12 Monate nach dem letzten Entzug; so lange bleiben sie, damit derselbe Kauf nicht erneut registriert werden kann.</li>
             <li>Eintr&auml;ge im Vorgangsprotokoll und von Google gemeldete Erstattungen zu nie registrierten K&auml;ufen l&ouml;schen wir nach 12 Monaten.</li>
             <li>Eine Pr&uuml;fung ohne Treffer, etwa die automatische Pr&uuml;fung auf einem Ger&auml;t ohne Lizenz, wird nicht in unserer Datenbank gespeichert; es bleibt nur der Eintrag im Zugriffsprotokoll.</li>
+            <li>Die Verkn&uuml;pfung eines Kaufs mit dem Creator-Code, mit dem er get&auml;tigt wurde, bewahren wir so lange auf wie den Datensatz des Kaufs und l&ouml;schen sie mit ihm.</li>
+            <li>Die Pr&uuml;fung eines Creator-Codes wird nicht in unserer Datenbank gespeichert; es bleibt nur der Eintrag im Zugriffsprotokoll.</li>
             <li>Verschl&uuml;sselte Sicherungen der Lizenzdatenbank bewahren wir 30 Tage auf, Server-Zugriffsprotokolle h&ouml;chstens 15 Tage.</li>
         </ul>
         <p>Die L&ouml;schung l&auml;uft automatisch einmal am Tag.</p>
         <p>Wo: Der Lizenzserver l&auml;uft auf einem bei der Hetzner Online GmbH in Deutschland gemieteten Server; Hetzner verarbeitet die Daten in unserem Auftrag auf Grundlage eines Auftragsverarbeitungsvertrags. Verschl&uuml;sselte Sicherungen (GPG) entstehen jede Nacht und liegen auf unserem eigenen Dateiserver, den die H2-AI GmbH in Deutschland betreibt.</p>
+        <p>Creator-Codes: Creators (zum Beispiel Videomacher, die die App vorstellen) k&ouml;nnen einen Code ausgeben, der bei Google Play einen Rabatt freischaltet. Die Eingabe eines Codes ist freiwillig. Tippen Sie auf "Apply", sendet die App den Code und den Namen der App an unseren Server; unser Server antwortet nur, ob der Code verwendet werden kann und welches Rabattangebot dazu geh&ouml;rt. Diese Pr&uuml;fung sendet keine Ger&auml;tekennung und wird nicht in unserer Datenbank gespeichert. Kaufen Sie danach, wickelt Google Play den Kauf mit diesem Rabattangebot ab, und die App sendet den Code zusammen mit dem Kaufbeleg an unseren Server (siehe "Was gesendet wird" oben). Unser Server rechnet den Kauf dem Creator nur zu, wenn Google Play best&auml;tigt, dass er mit dem Rabattangebot des Creators get&auml;tigt wurde. Er speichert, welcher Kauf mit welchem Code get&auml;tigt wurde. Ihre Lizenz erhalten Sie unabh&auml;ngig davon, ob der Kauf zugerechnet wird.</p>
+        <p>Wir nutzen das nur, um die Provision des Creators abzurechnen. Der Creator erh&auml;lt von uns nur die Anzahl der K&auml;ufe mit seinem Code (einschlie&szlig;lich der Zahl der Erstattungen), nie Ihre Ger&auml;tekennung, Bestellnummer oder andere Angaben &uuml;ber Sie.</p>
 
         <h2>4. Kamera und Bewegungserkennung</h2>
         <p>Die Bewegungserkennung ist optional und bleibt aus, bis Sie sie einschalten. Sie nutzt die Frontkamera, und zwar nur, w&auml;hrend der Screensaver l&auml;uft. Sie l&auml;uft nie, w&auml;hrend das Dashboard sichtbar ist, und nie, w&auml;hrend der Bildschirm von Ihrem Dashboard aus ausgeschaltet wurde.</p>
@@ -306,14 +324,14 @@
         <h2>10. L&ouml;schung</h2>
         <p>Um die L&ouml;schung oder eine Kopie der Lizenzdaten zu verlangen, die wir speichern, schreiben Sie an <a href="mailto:info@h2-ai.de">info@h2-ai.de</a>. Nennen Sie bitte die Google-Play-Bestellnummer (beginnt mit "GPA." und steht in der Kaufbest&auml;tigung von Google Play), die Ger&auml;tekennung oder beides. Die App zeigt die Ger&auml;tekennung in den Einstellungen unter Premium als "Device ID for support", sobald das Ger&auml;t eine Lizenz hat oder nachdem "Restore license" keine gefunden hat. Wir antworten innerhalb eines Monats.</p>
         <ul>
-            <li>Mit der Bestellnummer l&ouml;schen wir den Kauf mit allen Lizenzen, Erstattungen und Protokolleintr&auml;gen. Die Lizenz endet und l&auml;sst sich nicht wiederherstellen.</li>
+            <li>Mit der Bestellnummer l&ouml;schen wir den Kauf mit allen Lizenzen, Erstattungen, Protokolleintr&auml;gen und seiner Verkn&uuml;pfung mit einem Creator-Code. Die Lizenz endet und l&auml;sst sich nicht wiederherstellen.</li>
             <li>Nur mit der Ger&auml;tekennung beenden wir die Lizenz auf diesem Ger&auml;t und entfernen die Ger&auml;tekennung aus allen Datens&auml;tzen. Der Kauf selbst bleibt ohne Ger&auml;tekennung vermerkt, damit derselbe Kauf nicht erneut registriert werden kann.</li>
         </ul>
         <p>Kopien in verschl&uuml;sselten Sicherungen verschwinden innerhalb von 30 Tagen. Google Play bewahrt eigene Aufzeichnungen &uuml;ber den Kauf auf.</p>
         <p>Um alles zu entfernen, was die App auf dem Ger&auml;t gespeichert hat, deinstallieren Sie sie oder leeren Sie ihren Speicher in den Android-App-Einstellungen. Um zu entfernen, was die App an Ihren eigenen Broker gesendet hat, l&ouml;schen Sie dort die dauerhaft gespeicherten Nachrichten unter dem Themenpr&auml;fix h2wallpanel und den Eintrag des Panels unter homeassistant/device.</p>
 
         <h2>11. Empf&auml;nger und Ihre Rechte</h2>
-        <p>Empf&auml;nger der Lizenzdaten: die Hetzner Online GmbH, Deutschland (Hosting, als unser Auftragsverarbeiter), und Google (Google Play), das Ihren Kauf als Zahlungsdienst abwickelt und unserem Server K&auml;ufe und Erstattungen best&auml;tigt. Beim Kauf geben wir die pseudonyme Ger&auml;tekennung an Google weiter, das sie auch f&uuml;r eigene Zwecke nutzen kann, um auff&auml;llige K&auml;ufe zu erkennen (Abschnitt 8). Sonst niemand. Wir verkaufen keine Daten und geben sie nicht f&uuml;r Werbung weiter.</p>
+        <p>Empf&auml;nger der Lizenzdaten: die Hetzner Online GmbH, Deutschland (Hosting, als unser Auftragsverarbeiter), und Google (Google Play), das Ihren Kauf als Zahlungsdienst abwickelt und unserem Server K&auml;ufe und Erstattungen best&auml;tigt. Beim Kauf geben wir die pseudonyme Ger&auml;tekennung an Google weiter, das sie auch f&uuml;r eigene Zwecke nutzen kann, um auff&auml;llige K&auml;ufe zu erkennen (Abschnitt 8). Creators erhalten nur die Anzahl der K&auml;ufe mit ihrem Code, keine personenbezogenen Daten (Abschnitt 3 d), "Creator-Codes"). Sonst niemand. Wir verkaufen keine Daten und geben sie nicht f&uuml;r Werbung weiter.</p>
         <p>Sie haben das Recht auf Auskunft, Berichtigung, L&ouml;schung, Einschr&auml;nkung der Verarbeitung, Daten&uuml;bertragbarkeit und auf Widerspruch gegen Verarbeitungen aufgrund berechtigten Interesses (Art. 15 bis 18, 20, 21 DSGVO). Sie haben au&szlig;erdem das Recht, sich bei einer Datenschutz-Aufsichtsbeh&ouml;rde zu beschweren, etwa beim Landesbeauftragten f&uuml;r den Datenschutz und die Informationsfreiheit Baden-W&uuml;rttemberg.</p>
 
         <h2>12. Kinder</h2>
